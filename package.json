@@ -18,7 +18,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "prestart": "yarn",
     "start": "craco start",
+    "develop": "craco start",
     "build": "craco build",
     "test": "craco test"
   },
