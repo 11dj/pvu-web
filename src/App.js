@@ -140,7 +140,7 @@ const App = () => {
       <div>
         <h1>Crow Tracker</h1>
         <Input placeholder="Insert your token" onChange={handletokenInput} />
-        <div>Lastest update: {getTimeX()}</div>
+        {JSON.parse(tokenList) ? <div>Lastest update: {getTimeX()}</div> : null}
         <div>
           {JSON.parse(tokenList) && dataList ? dataList.map((acc) =>
             <div key={acc.addr}>
@@ -160,7 +160,7 @@ const App = () => {
                   : (<div>Noo</div>)}
               </Card>
             </div>
-          ) : <Processing />}
+          ) : (JSON.parse(tokenList) ? <Processing /> : null)}
         </div>
       </div>
     </div >
