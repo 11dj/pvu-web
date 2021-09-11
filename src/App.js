@@ -162,6 +162,7 @@ const App = () => {
                             <span>Time to harvest!!!</span>
                           </Countdown></div>
                           <div><b>Status: </b>{ea.stage}</div>
+                          <div><b>hasCrow?: </b>{ea.hasOwnProperty("hasCrow") ? 'Yes' : 'No'}</div>
                           <div><b>Water?: </b> {ea.needWater ? 'Yes' : 'No'}</div>
 
                         </div>
