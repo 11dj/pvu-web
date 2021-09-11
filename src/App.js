@@ -87,7 +87,7 @@ const App = () => {
       if (response.status === 200) {
         const { data: { status, data } } = response
         console.log(data)
-        return { addr, data, token, updateTime: Date.now() }
+        return { addr, data, token, updateTime: Date.now(), status }
         // if (status === 0 && data.length > 0) {
         //   console.log(data)
         //   const hasCrow = await data.find(e => e.hasCrow)
@@ -135,11 +135,18 @@ const App = () => {
     }
   }, [fetchData, tokenList])
 
+  const getColorBG = (item) => {
+    if (item.hasOwnProperty("hasCrow")) return 'red'
+    if (item.needWater) return 'cyan'
+    if (Date.now() > new Date(item.harvestTime)) return 'green'
+    return 'transparent'
+  }
+
   return (
     <div className="App">
       <div>
         <h1>Crow Tracker</h1>
-        <Input placeholder="Insert your token" onChange={handletokenInput} />
+        <Input placeholder="Insert your token (not address)" onChange={handletokenInput} />
         {JSON.parse(tokenList) ? <div>Lastest update: {getTimeX()}</div> : null}
         <div>
           {JSON.parse(tokenList) && dataList ? dataList.map((acc) =>
@@ -148,13 +155,15 @@ const App = () => {
                 {(acc.hasOwnProperty("data")) ?
                   (<div>
                     {acc.data.map(ea =>
-                      <div key={ea._id} className='plant-div' style={{ background: ea.hasOwnProperty("hasCrow") ? 'red' : 'transparent' }}>
+                      <div key={ea._id} className='plant-div' style={{ background: getColorBG(ea) }}>
                         <Avatar src={ea.plant.iconUrl} />
                         <div style={{ marginLeft: '12px' }}>
                           <div><b>Countdown: </b><Countdown date={new Date(ea.harvestTime)}>
-                            Time to harvest!!!
+                            <span>Time to harvest!!!</span>
                           </Countdown></div>
                           <div><b>Status: </b>{ea.stage}</div>
+                          <div><b>Water?: </b> {ea.needWater ? 'Yes' : 'No'}</div>
+
                         </div>
                       </div>)}</div>)
                   : (<div>Noo</div>)}
@@ -163,6 +172,7 @@ const App = () => {
           ) : (JSON.parse(tokenList) ? <Processing /> : null)}
         </div>
       </div>
+
     </div >
   )
 }
