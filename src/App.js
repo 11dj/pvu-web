@@ -6,7 +6,9 @@ import {
   message,
   Modal,
   Card,
-  Avatar
+  Avatar,
+  Row,
+  Col
 } from 'antd'
 import {
   ExclamationCircleOutlined
@@ -128,7 +130,7 @@ const App = () => {
       fetchData()
       intx = setInterval(() => {
         fetchData()
-      }, 1000 * 60 * 5)
+      }, 1000 * 60 * 23)
     }
     return () => {
       clearInterval(intx)
@@ -148,9 +150,10 @@ const App = () => {
         <h1>Crow Tracker</h1>
         <Input placeholder="Insert your token (not address)" onChange={handletokenInput} />
         {JSON.parse(tokenList) ? <div>Lastest update: {getTimeX()}</div> : null}
-        <div>
+        <Row gutter={24} >
           {JSON.parse(tokenList) && dataList ? dataList.map((acc) =>
-            <div key={acc.addr}>
+
+            <Col className="gutter-row" span={12} key={acc.addr}>
               <Card title={acc.addr.slice(0, 6) + '....' + acc.addr.substr(-4)} bordered={false} className={'acc-card'} >
                 {(acc.hasOwnProperty("data")) ?
                   (<div>
@@ -169,9 +172,10 @@ const App = () => {
                       </div>)}</div>)
                   : (<div>Noo</div>)}
               </Card>
-            </div>
+            </Col>
+
           ) : (JSON.parse(tokenList) ? <Processing /> : null)}
-        </div>
+        </Row>
       </div>
 
     </div >
